@@ -36,3 +36,7 @@ lerna-debug.log*
 
 # Exclude .env
 .env
+
+# sonarqube
+.scannerwork
+.sonar_lock

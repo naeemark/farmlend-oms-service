@@ -4,12 +4,12 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   @ApiTags('0 - Health')
   @ApiOperation({ summary: 'Check Health' })
-  getHealth(): {} {
+  getHealth(): object {
     return this.appService.getHealth();
   }
 }
