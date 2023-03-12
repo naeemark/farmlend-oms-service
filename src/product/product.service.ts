@@ -13,12 +13,12 @@ export class ProductService {
     private readonly repository: Repository<Product>
   ) {}
 
-  create(createProductDto: CreateProductDto) {
+  create(createProductDto: CreateProductDto): Observable<Product> {
     return from(this.repository.save(createProductDto));
   }
 
-  findAll() {
-    return "This action returns all product";
+  findAll(): Promise<Product[]> {
+    return this.repository.find();
   }
 
   findOne(id: number) {
