@@ -1,8 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { CreateProductDto } from "./dto/create-product.dto";
+import { ProductDto } from "./dto/product.dto";
 import { Product } from "./entities/product.entity";
 import { ProductService } from "./product.service";
 import { ProductController } from "./product.controller";
+import { HttpException, HttpStatus } from "@nestjs/common";
 
 describe("ProductController", () => {
   let controller: ProductController;
@@ -17,12 +18,25 @@ describe("ProductController", () => {
           useValue: {
             create: jest
               .fn()
-              .mockImplementation((dto: CreateProductDto) =>
+              .mockImplementation((dto: ProductDto) =>
                 Promise.resolve({ id: 1, ...dto })
               ),
             findAll: jest
               .fn()
-              .mockImplementation(() => Promise.resolve([new Product()]))
+              .mockImplementation(() => Promise.resolve([new Product()])),
+            findOne: jest
+              .fn()
+              .mockImplementation((id) => Promise.resolve(new Product())),
+            update: jest
+              .fn()
+              .mockImplementation((id: number, dto: ProductDto) =>
+                Promise.resolve({ id, ...dto })
+              ),
+            remove: jest
+              .fn()
+              .mockImplementation((id: number) =>
+                Promise.resolve({ deleted: true })
+              )
           }
         }
       ]
@@ -33,27 +47,60 @@ describe("ProductController", () => {
   });
 
   it("should create a new product", () => {
-    const createProductDto: CreateProductDto = {
+    const dto: ProductDto = {
       category: "TestProduct",
       variety: "testing",
       packaging: "Box"
     };
     const product = new Product();
     product.id = 1;
-    product.category = createProductDto.category;
-    product.variety = createProductDto.variety;
-    product.packaging = createProductDto.packaging;
+    product.category = dto.category;
+    product.variety = dto.variety;
+    product.packaging = dto.packaging;
 
-    const result = controller.create(createProductDto);
+    const result = controller.create(dto);
     expect(result).resolves.toEqual(product);
-    expect(service.create).toHaveBeenCalledWith(createProductDto);
+    expect(service.create).toHaveBeenCalledWith(dto);
   });
 
   it("should get product list", () => {
     const product = new Product();
-
     const result = controller.findAll();
     expect(result).resolves.toEqual([product]);
+  });
+
+  it("should get product by id", () => {
+    const product = new Product();
+    const result = controller.findOne(String(1));
+    expect(result).resolves.toEqual(product);
+  });
+
+  it("should get product by id - error", async () => {
+    const exception = new HttpException("Not found", HttpStatus.NOT_FOUND);
+    const spy = jest.spyOn(service, "findOne").mockRejectedValueOnce(exception);
+
+    await expect(controller.findOne(String(1))).rejects.toThrow(exception);
+    expect(spy).toBeCalledTimes(1);
+  });
+
+  it("should update product", () => {
+    const dto: ProductDto = {
+      category: "TestProduct",
+      variety: "testing",
+      packaging: "Box"
+    };
+    const product = new Product();
+    product.id = 1;
+    product.category = dto.category;
+    product.variety = dto.variety;
+    product.packaging = dto.packaging;
+    const result = controller.update(String(1), product);
+    expect(result).resolves.toEqual(product);
+  });
+
+  it("should delete product", () => {
+    const result = controller.remove(String(1));
+    expect(result).resolves.toEqual({ deleted: true });
   });
 
   it("should be defined", () => {

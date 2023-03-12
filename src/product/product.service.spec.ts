@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { ProductService } from "./product.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateProductDto } from "./dto/create-product.dto";
+import { ProductDto } from "./dto/product.dto";
 import { Product } from "./entities/product.entity";
 
 describe("ProductService", () => {
@@ -25,7 +25,7 @@ describe("ProductService", () => {
   });
 
   it("should create a new product", () => {
-    const createProductDto: CreateProductDto = {
+    const createProductDto: ProductDto = {
       category: "TestProduct",
       variety: "testing",
       packaging: "Box"

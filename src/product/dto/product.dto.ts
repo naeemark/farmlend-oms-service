@@ -3,9 +3,9 @@ import { JoiSchema, JoiSchemaOptions } from "nestjs-joi";
 import * as Joi from "joi";
 
 @JoiSchemaOptions({
-  allowUnknown: true
+  allowUnknown: false
 })
-export class CreateProductDto {
+export class ProductDto {
   @ApiProperty({ example: "Apple" })
   @JoiSchema(Joi.string().required())
   category?: string;
@@ -17,5 +17,4 @@ export class CreateProductDto {
   @ApiProperty({ default: "18KG Boxes" })
   @JoiSchema(Joi.string().required())
   packaging?: string;
-  createdAt?: Date;
 }

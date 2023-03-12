@@ -10,8 +10,7 @@ import {
   HttpStatus
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
+import { ProductDto } from "./dto/product.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Product } from "./entities/product.entity";
 
@@ -24,7 +23,7 @@ export class ProductController {
   @Post()
   @ApiOperation({ summary: "Create a product" })
   @ApiResponse({ status: 201, description: "Created", type: Product })
-  async create(@Body() dto: CreateProductDto) {
+  async create(@Body() dto: ProductDto) {
     return await this.productService.create(dto);
   }
 
@@ -58,7 +57,7 @@ export class ProductController {
     description: "Updated the product",
     type: Product
   })
-  async update(@Param("id") id: string, @Body() dto: UpdateProductDto) {
+  async update(@Param("id") id: string, @Body() dto: ProductDto) {
     return await this.productService.update(+id, dto);
   }
 
