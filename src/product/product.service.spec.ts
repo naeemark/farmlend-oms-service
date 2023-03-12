@@ -39,7 +39,7 @@ describe("ProductService", () => {
       .spyOn(repository, "save")
       .mockImplementation(() => Promise.resolve(product));
 
-    service.create(createProductDto).subscribe((result) => {
+    service.create(createProductDto).then((result) => {
       expect(result).toEqual(product);
     });
   });

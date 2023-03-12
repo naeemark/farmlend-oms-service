@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { from, Observable } from "rxjs";
 import { Repository } from "typeorm";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
@@ -13,23 +12,29 @@ export class ProductService {
     private readonly repository: Repository<Product>
   ) {}
 
-  create(createProductDto: CreateProductDto): Observable<Product> {
-    return from(this.repository.save(createProductDto));
+  async create(dto: CreateProductDto): Promise<Product> {
+    return await this.repository.save(dto);
   }
 
-  findAll(): Promise<Product[]> {
-    return this.repository.find();
+  async findAll(): Promise<Product[]> {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: number): Promise<Product> {
+    return await this.repository.findOneOrFail({ where: { id } });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, dto: UpdateProductDto) {
+    await this.repository.update({ id }, dto);
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number): Promise<{ deleted: boolean; message?: string }> {
+    try {
+      await this.repository.delete({ id });
+      return { deleted: true };
+    } catch (err) {
+      return { deleted: false, message: err.message };
+    }
   }
 }

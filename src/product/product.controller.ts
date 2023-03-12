@@ -5,7 +5,9 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  HttpException,
+  HttpStatus
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
@@ -22,8 +24,8 @@ export class ProductController {
   @Post()
   @ApiOperation({ summary: "Create a product" })
   @ApiResponse({ status: 201, description: "Created", type: Product })
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  async create(@Body() dto: CreateProductDto) {
+    return await this.productService.create(dto);
   }
 
   @Get()
@@ -33,15 +35,20 @@ export class ProductController {
     description: "List of Products",
     type: [Product]
   })
-  findAll() {
-    return this.productService.findAll();
+  async findAll() {
+    return await this.productService.findAll();
   }
 
   @Get(":id")
   @ApiOperation({ summary: "Get product by id" })
-  @ApiResponse({ status: 200, description: "Product by id", type: [Product] })
-  findOne(@Param("id") id: string) {
-    return this.productService.findOne(+id);
+  @ApiResponse({ status: 200, description: "Product found", type: Product })
+  @ApiResponse({ status: 404, description: "Product not found" })
+  async findOne(@Param("id") id: string) {
+    try {
+      return await this.productService.findOne(+id);
+    } catch (err) {
+      throw new HttpException("Not found", HttpStatus.NOT_FOUND);
+    }
   }
 
   @Patch(":id")
@@ -51,8 +58,8 @@ export class ProductController {
     description: "Updated the product",
     type: Product
   })
-  update(@Param("id") id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  async update(@Param("id") id: string, @Body() dto: UpdateProductDto) {
+    return await this.productService.update(+id, dto);
   }
 
   @Delete(":id")
@@ -62,7 +69,7 @@ export class ProductController {
     description: "Deleted the product",
     type: Product
   })
-  remove(@Param("id") id: string) {
-    return this.productService.remove(+id);
+  async remove(@Param("id") id: string): Promise<{ deleted: boolean }> {
+    return await this.productService.remove(+id);
   }
 }
