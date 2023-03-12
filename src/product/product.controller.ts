@@ -15,6 +15,7 @@ import { Product } from "./entities/product.entity";
 
 @Controller({ version: "1", path: "products" })
 @ApiTags("Products")
+@ApiResponse({ status: 400, description: "Bad Request: validation error!" })
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 

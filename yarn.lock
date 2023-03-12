@@ -3484,6 +3484,13 @@ jest@29.3.1:
     import-local "^3.0.2"
     jest-cli "^29.3.1"
 
+joi-class-decorators@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/joi-class-decorators/-/joi-class-decorators-1.1.0.tgz#62267c971d44d5c2645ca348d4f0cd522c681b5c"
+  integrity sha512-gAnBcKWoF+jWo+vx/X6VctDxFgGDEdkce64RgkLK2cMLO2bHKk3SXMV7fGKTA9VGis20n+4COBC5KVL2gXzlEg==
+  dependencies:
+    lodash "^4.17.21"
+
 joi@*, joi@^17.8.3:
   version "17.8.3"
   resolved "https://registry.yarnpkg.com/joi/-/joi-17.8.3.tgz#d772fe27a87a5cda21aace5cf11eee8671ca7e6f"
@@ -3893,6 +3900,13 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+nestjs-joi@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/nestjs-joi/-/nestjs-joi-1.9.0.tgz#a85424c8d119513ddaef77423e7689a547f3c8a1"
+  integrity sha512-CIpbw/+losjHLnvJ/exJTzCBeWKMPkFRgU33CPGg2KoXAZT0bdE30e1CUM3s70ysflKW1D5QIqv0fCeQxxcaTg==
+  dependencies:
+    joi-class-decorators "^1.1.0"
 
 node-abort-controller@^3.0.1:
   version "3.1.1"

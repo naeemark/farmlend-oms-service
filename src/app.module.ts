@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { JoiPipeModule } from "nestjs-joi";
 import * as Joi from "joi";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -20,6 +21,7 @@ import { ProductModule } from "./product/product.module";
       })
     }),
     DatabaseModule,
+    JoiPipeModule,
     ProductModule
   ],
   controllers: [AppController],
