@@ -1,0 +1,26 @@
+name: Publish Docker Image
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+
+  docker:
+    name: Publish - Docker Hub
+    runs-on: ubuntu-22.04
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Build Docker image
+        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} -t $REPO:${GITHUB_REF#refs/*/} .
+      - name: Publish Docker image
+        run: docker push $REPO --all-tags
+
+
+#   Deployment works as manual by pulling the latest image on EC2 Instance
