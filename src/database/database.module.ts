@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -23,4 +22,4 @@ import { join } from 'path';
     }),
   ],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}
