@@ -19,7 +19,10 @@ describe("ProductController", () => {
               .fn()
               .mockImplementation((dto: CreateProductDto) =>
                 Promise.resolve({ id: 1, ...dto })
-              )
+              ),
+            findAll: jest
+              .fn()
+              .mockImplementation(() => Promise.resolve([new Product()]))
           }
         }
       ]
@@ -44,6 +47,13 @@ describe("ProductController", () => {
     const result = controller.create(createProductDto);
     expect(result).resolves.toEqual(product);
     expect(service.create).toHaveBeenCalledWith(createProductDto);
+  });
+
+  it("should get product list", () => {
+    const product = new Product();
+
+    const result = controller.findAll();
+    expect(result).resolves.toEqual([product]);
   });
 
   it("should be defined", () => {

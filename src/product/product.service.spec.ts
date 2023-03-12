@@ -44,6 +44,18 @@ describe("ProductService", () => {
     });
   });
 
+  it("should get product list", () => {
+    const product = new Product();
+    jest
+      .spyOn(repository, "find")
+      .mockImplementation(() => Promise.resolve([product]));
+
+    service.findAll().then((result) => {
+      expect(result.length).toEqual([product].length);
+      expect(result).toEqual([product]);
+    });
+  });
+
   it("should be defined", () => {
     expect(service).toBeDefined();
   });
