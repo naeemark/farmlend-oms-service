@@ -16,27 +16,11 @@ describe("ProductController", () => {
         {
           provide: ProductService,
           useValue: {
-            create: jest
-              .fn()
-              .mockImplementation((dto: ProductDto) =>
-                Promise.resolve({ id: 1, ...dto })
-              ),
-            findAll: jest
-              .fn()
-              .mockImplementation(() => Promise.resolve([new Product()])),
-            findOne: jest
-              .fn()
-              .mockImplementation((id) => Promise.resolve(new Product())),
-            update: jest
-              .fn()
-              .mockImplementation((id: number, dto: ProductDto) =>
-                Promise.resolve({ id, ...dto })
-              ),
-            remove: jest
-              .fn()
-              .mockImplementation((id: number) =>
-                Promise.resolve({ deleted: true })
-              )
+            create: jest.fn().mockImplementation((dto: ProductDto) => Promise.resolve({ id: 1, ...dto })),
+            findAll: jest.fn().mockImplementation(() => Promise.resolve([new Product()])),
+            findOne: jest.fn().mockImplementation((id) => Promise.resolve(new Product())),
+            update: jest.fn().mockImplementation((id: number, dto: ProductDto) => Promise.resolve({ id, ...dto })),
+            remove: jest.fn().mockImplementation((id: number) => Promise.resolve({ deleted: true }))
           }
         }
       ]
@@ -47,11 +31,7 @@ describe("ProductController", () => {
   });
 
   it("should create a new product", () => {
-    const dto: ProductDto = {
-      category: "TestProduct",
-      variety: "testing",
-      packaging: "Box"
-    };
+    const dto: ProductDto = { category: "test", variety: "Gold", packaging: "Box" };
     const product = new Product();
     product.id = 1;
     product.category = dto.category;
@@ -84,11 +64,7 @@ describe("ProductController", () => {
   });
 
   it("should update product", () => {
-    const dto: ProductDto = {
-      category: "TestProduct",
-      variety: "testing",
-      packaging: "Box"
-    };
+    const dto: ProductDto = { category: "test", variety: "Gold", packaging: "Box" };
     const product = new Product();
     product.id = 1;
     product.category = dto.category;

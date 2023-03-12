@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  HttpException,
-  HttpStatus
-} from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { ProductDto } from "./dto/product.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";

@@ -35,9 +35,7 @@ describe("ProductService", () => {
     product.category = createProductDto.category;
     product.variety = createProductDto.variety;
     product.packaging = createProductDto.packaging;
-    jest
-      .spyOn(repository, "save")
-      .mockImplementation(() => Promise.resolve(product));
+    jest.spyOn(repository, "save").mockImplementation(() => Promise.resolve(product));
 
     service.create(createProductDto).then((result) => {
       expect(result).toEqual(product);
@@ -46,9 +44,7 @@ describe("ProductService", () => {
 
   it("should get product list", () => {
     const product = new Product();
-    jest
-      .spyOn(repository, "find")
-      .mockImplementation(() => Promise.resolve([product]));
+    jest.spyOn(repository, "find").mockImplementation(() => Promise.resolve([product]));
 
     service.findAll().then((result) => {
       expect(result.length).toEqual([product].length);
