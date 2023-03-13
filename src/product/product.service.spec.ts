@@ -24,7 +24,7 @@ describe("ProductService", () => {
     repository = module.get<Repository<Product>>(getRepositoryToken(Product));
   });
 
-  it("should create a new product", () => {
+  it("should Create new product", () => {
     const dto: ProductDto = { category: "Test", variety: "Red", packaging: "Box Pck" };
     const product = new Product();
     product.id = 1;

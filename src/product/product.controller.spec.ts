@@ -30,7 +30,7 @@ describe("ProductController", () => {
     service = module.get<ProductService>(ProductService);
   });
 
-  it("should create a new product", () => {
+  it("should Create new product", () => {
     const dto: ProductDto = { category: "test", variety: "Gold", packaging: "Box" };
     const product = new Product();
     product.id = 1;
