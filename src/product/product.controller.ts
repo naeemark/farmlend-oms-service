@@ -8,24 +8,20 @@ import { Product } from "./entities/product.entity";
 @ApiTags("Products")
 @ApiResponse({ status: 400, description: "Bad Request: validation error!" })
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly service: ProductService) {}
 
   @Post()
   @ApiOperation({ summary: "Create a product" })
   @ApiResponse({ status: 201, description: "Created", type: Product })
   async create(@Body() dto: ProductDto) {
-    return await this.productService.create(dto);
+    return await this.service.create(dto);
   }
 
   @Get()
   @ApiOperation({ summary: "List all products" })
-  @ApiResponse({
-    status: 200,
-    description: "List of Products",
-    type: [Product]
-  })
+  @ApiResponse({ status: 200, description: "List of Products", type: [Product] })
   async findAll() {
-    return await this.productService.findAll();
+    return await this.service.findAll();
   }
 
   @Get(":id")
@@ -34,7 +30,7 @@ export class ProductController {
   @ApiResponse({ status: 404, description: "Product not found" })
   async findOne(@Param("id") id: string) {
     try {
-      return await this.productService.findOne(+id);
+      return await this.service.findOne(+id);
     } catch (err) {
       throw new HttpException("Not found", HttpStatus.NOT_FOUND);
     }
@@ -42,23 +38,15 @@ export class ProductController {
 
   @Patch(":id")
   @ApiOperation({ summary: "Update product" })
-  @ApiResponse({
-    status: 200,
-    description: "Updated the product",
-    type: Product
-  })
+  @ApiResponse({ status: 200, description: "Updated the product", type: Product })
   async update(@Param("id") id: string, @Body() dto: ProductDto) {
-    return await this.productService.update(+id, dto);
+    return await this.service.update(+id, dto);
   }
 
   @Delete(":id")
   @ApiOperation({ summary: "Delete product" })
-  @ApiResponse({
-    status: 200,
-    description: "Deleted the product",
-    type: Product
-  })
+  @ApiResponse({ status: 200, description: "Deleted the product", type: Product })
   async remove(@Param("id") id: string): Promise<{ deleted: boolean }> {
-    return await this.productService.remove(+id);
+    return await this.service.remove(+id);
   }
 }
