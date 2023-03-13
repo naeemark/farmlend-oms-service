@@ -25,7 +25,7 @@ describe("OrganizationService", () => {
     repository = module.get<Repository<Organization>>(getRepositoryToken(Organization));
   });
 
-  it("should create a new organization", () => {
+  it("should Create new organization", () => {
     const dto: OrganizationDto = { name: "Test", type: "seller" };
     const organization = new Organization();
     organization.id = 1;

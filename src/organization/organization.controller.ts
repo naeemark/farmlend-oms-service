@@ -11,7 +11,7 @@ export class OrganizationController {
   constructor(private readonly service: OrganizationService) {}
 
   @Post()
-  @ApiOperation({ summary: "Create a organization" })
+  @ApiOperation({ summary: "Create organization" })
   @ApiResponse({ status: 201, description: "Created", type: Organization })
   create(@Body() createOrganizationDto: OrganizationDto) {
     return this.service.create(createOrganizationDto);

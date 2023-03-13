@@ -11,7 +11,7 @@ export class ProductController {
   constructor(private readonly service: ProductService) {}
 
   @Post()
-  @ApiOperation({ summary: "Create a product" })
+  @ApiOperation({ summary: "Create product" })
   @ApiResponse({ status: 201, description: "Created", type: Product })
   async create(@Body() dto: ProductDto) {
     return await this.service.create(dto);
