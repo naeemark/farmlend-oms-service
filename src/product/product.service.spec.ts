@@ -25,11 +25,7 @@ describe("ProductService", () => {
   });
 
   it("should create a new product", () => {
-    const dto: ProductDto = {
-      category: "Test",
-      variety: "Red",
-      packaging: "Box Pck"
-    };
+    const dto: ProductDto = { category: "Test", variety: "Red", packaging: "Box Pck" };
     const product = new Product();
     product.id = 1;
     product.category = dto.category;

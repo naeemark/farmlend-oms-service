@@ -6,6 +6,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DatabaseModule } from "./database/database.module";
 import { ProductModule } from "./product/product.module";
+import { OrganizationModule } from "./organization/organization.module";
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { ProductModule } from "./product/product.module";
     }),
     DatabaseModule,
     JoiPipeModule,
-    ProductModule
+    ProductModule,
+    OrganizationModule
   ],
   controllers: [AppController],
   providers: [AppService]
