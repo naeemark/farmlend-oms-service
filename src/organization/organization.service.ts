@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 import { OrganizationDto } from "./dto/organization.dto";
 import { Organization } from "./entities/organization.entity";
 
+const relations = { products: true };
+
 @Injectable()
 export class OrganizationService {
   constructor(
@@ -16,11 +18,11 @@ export class OrganizationService {
   }
 
   async findAll(): Promise<Organization[]> {
-    return await this.repository.find();
+    return await this.repository.find({ relations });
   }
 
   async findOne(id: number): Promise<Organization> {
-    return await this.repository.findOneOrFail({ where: { id } });
+    return await this.repository.findOneOrFail({ where: { id }, relations });
   }
 
   async update(id: number, dto: OrganizationDto) {

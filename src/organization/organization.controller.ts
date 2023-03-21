@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from "@nestjs/common";
 import { OrganizationService } from "./organization.service";
 import { OrganizationDto } from "./dto/organization.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -13,14 +13,14 @@ export class OrganizationController {
   @Post()
   @ApiOperation({ summary: "Create organization" })
   @ApiResponse({ status: 201, description: "Created", type: Organization })
-  create(@Body() createOrganizationDto: OrganizationDto) {
+  async create(@Body() createOrganizationDto: OrganizationDto) {
     return this.service.create(createOrganizationDto);
   }
 
   @Get()
   @ApiOperation({ summary: "List all organizations" })
   @ApiResponse({ status: 200, description: "List of organizations", type: [Organization] })
-  findAll() {
+  async findAll() {
     return this.service.findAll();
   }
 
@@ -28,21 +28,25 @@ export class OrganizationController {
   @ApiOperation({ summary: "Get organization by id" })
   @ApiResponse({ status: 200, description: "Organization found", type: Organization })
   @ApiResponse({ status: 404, description: "Organization not found" })
-  findOne(@Param("id") id: string) {
-    return this.service.findOne(+id);
+  async findOne(@Param("id") id: string) {
+    try {
+      return await this.service.findOne(+id);
+    } catch (err) {
+      throw new HttpException("Not found", HttpStatus.NOT_FOUND);
+    }
   }
 
   @Patch(":id")
   @ApiOperation({ summary: "Update organization" })
   @ApiResponse({ status: 200, description: "Updated the organization", type: Organization })
-  update(@Param("id") id: string, @Body() dto: OrganizationDto) {
+  async update(@Param("id") id: string, @Body() dto: OrganizationDto) {
     return this.service.update(+id, dto);
   }
 
   @Delete(":id")
   @ApiOperation({ summary: "Delete organization" })
   @ApiResponse({ status: 200, description: "Deleted the organization", type: Organization })
-  remove(@Param("id") id: string) {
+  async remove(@Param("id") id: string) {
     return this.service.remove(+id);
   }
 }

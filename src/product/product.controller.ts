@@ -13,8 +13,13 @@ export class ProductController {
   @Post()
   @ApiOperation({ summary: "Create product" })
   @ApiResponse({ status: 201, description: "Created", type: Product })
+  @ApiResponse({ status: 412, description: "A precondition is not fulfilled" })
   async create(@Body() dto: ProductDto) {
-    return await this.service.create(dto);
+    try {
+      return await this.service.create(dto);
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.PRECONDITION_FAILED);
+    }
   }
 
   @Get()

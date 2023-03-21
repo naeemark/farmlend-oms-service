@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { Organization } from "./../../organization/entities/organization.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from "typeorm";
 
 @Entity("products")
 export class Product {
@@ -28,4 +29,8 @@ export class Product {
   })
   @CreateDateColumn()
   createdAt: Date;
+
+  @ApiProperty({ example: "1", description: "The Product Organization", type: Organization })
+  @ManyToOne(() => Organization, (organization) => organization.products)
+  organization: Organization;
 }
