@@ -43,6 +43,18 @@ describe("ProductController", () => {
     expect(service.create).toHaveBeenCalledWith(dto);
   });
 
+  it("should Create new product - error", async () => {
+    const dto: ProductDto = { category: "test", variety: "Gold", packaging: "Box" };
+    const exception = new HttpException("Error", HttpStatus.PRECONDITION_FAILED);
+    const spy = jest.spyOn(service, "create").mockRejectedValueOnce(exception);
+
+    await controller.create(dto).catch((err) => {
+      expect(err).toBeInstanceOf(HttpException);
+      expect(err.status).toBe(HttpStatus.PRECONDITION_FAILED.valueOf());
+    });
+    expect(spy).toBeCalledTimes(1);
+  });
+
   it("should get product list", () => {
     const product = new Product();
     const result = controller.findAll();
