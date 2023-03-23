@@ -16,6 +16,7 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 - [Problem Statement](#problem-statement)
 - [Proposed Solution](#proposed-solution)
   - [Entities](#entities)
+- [Assumptions](#assumptions)
 - [Deliverable Content](#deliverable-content)
   - [Functional Implementation](#functional-implementation)
   - [Non-Functional Implementation](#non-functional-implementation)
@@ -91,6 +92,16 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 - I would like to use database constraints to avoid deletion of account which is used as a reference in some transaction
 - It is also noted that there is a possible `cicular dependency` between the mention entities, to resolve this, there might be a need of `linking tables`
 
+![Problem Statement](screenshots/erd.png)
+
+### Assumptions
+
+- Order and referenced order can have same type
+- An order can be created by providing list of products or an `order-id` as reference
+- Procuts associated with an order will belong to same `organisation`
+- To avoid circular dependency, an order is not keeping an attribute of `organisation` but will adopt it from one of the associated products
+- To have maximum visibility of data attributes, nested object are made enabled for reterieval
+
 ### Deliverable Content
 
 #### Functional Implementation
@@ -99,7 +110,19 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 - **GET** `{baseURL}/api/v1/products/{id}` - Returns a product
 - **GET** `{baseURL}/api/v1/products` - Returns all products
 - **PATCH** `{baseURL}/api/v1/products/{id}` - Updates a product
-- ## **DELETE** `{baseURL}/api/v1/products/{id}` - Delete a product
+- **DELETE** `{baseURL}/api/v1/products/{id}` - Delete a product
+
+- **POST** `{baseURL}/api/v1/organizations` - creates a new organization
+- **GET** `{baseURL}/api/v1/organizations/{id}` - Returns organization
+- **GET** `{baseURL}/api/v1/organizations` - Returns all organizations
+- **PATCH** `{baseURL}/api/v1/organizations/{id}` - Updates a organization
+- **DELETE** `{baseURL}/api/v1/organizations/{id}` - Delete a organization
+
+- **POST** `{baseURL}/api/v1/orders` - creates a new order
+- **GET** `{baseURL}/api/v1/orders/{id}` - Returns order
+- **GET** `{baseURL}/api/v1/orders` - Returns all orders
+- **PATCH** `{baseURL}/api/v1/orders/{id}` - Updates a order
+- **DELETE** `{baseURL}/api/v1/orders/{id}` - Delete a order
 
 #### Non-Functional Implementation
 

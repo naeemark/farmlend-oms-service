@@ -14,6 +14,8 @@ export class OrderController {
   @ApiOperation({ summary: "Create order" })
   @ApiResponse({ status: 201, description: "Created", type: Order })
   async create(@Body() dto: OrderDto) {
+    if (dto.products && dto.order)
+      throw new HttpException("Either products or order acceptable at a time", HttpStatus.BAD_REQUEST);
     return this.service.create(dto);
   }
 
@@ -40,6 +42,8 @@ export class OrderController {
   @ApiOperation({ summary: "Update order" })
   @ApiResponse({ status: 200, description: "Updated the order", type: Order })
   async update(@Param("id") id: string, @Body() dto: OrderDto) {
+    if (dto.products && dto.order)
+      throw new HttpException("Either products or order acceptable at a time", HttpStatus.BAD_REQUEST);
     return this.service.update(+id, dto);
   }
 
