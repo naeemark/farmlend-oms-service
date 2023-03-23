@@ -13,8 +13,8 @@ export class OrganizationController {
   @Post()
   @ApiOperation({ summary: "Create organization" })
   @ApiResponse({ status: 201, description: "Created", type: Organization })
-  async create(@Body() createOrganizationDto: OrganizationDto) {
-    return this.service.create(createOrganizationDto);
+  async create(@Body() dto: OrganizationDto) {
+    return this.service.create(dto);
   }
 
   @Get()
