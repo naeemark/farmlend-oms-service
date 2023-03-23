@@ -16,7 +16,7 @@ export class Organization {
   name: string;
 
   @ApiProperty({ example: "seller", description: "The Organization type" })
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   type: string;
 
   @ApiProperty({

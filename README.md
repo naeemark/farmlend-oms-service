@@ -11,7 +11,7 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 ---
 
 - [Distribution](#distribution)
-  - [Swagger APi-Docs](#swagger-api-docs)
+  - [Swagger API-Docs](#swagger-api-docs)
   - [What is this repository for](#what-is-this-repository-for)
 - [Problem Statement](#problem-statement)
 - [Proposed Solution](#proposed-solution)
