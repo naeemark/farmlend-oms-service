@@ -1,26 +1,27 @@
-import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ProductService } from "../product/product.service";
 import { EntityNotFoundError, Repository } from "typeorm";
 import { OrderDto } from "./dto/order.dto";
 import { Order } from "./entities/order.entity";
+import { Product } from "../product/entities/product.entity";
 
 const relations = { products: true, referenceOrder: { products: true } };
 
 @Injectable()
 export class OrderService {
-  @Inject(ProductService)
-  private readonly productService: ProductService;
-
   constructor(
-    @InjectRepository(Order)
-    private readonly repository: Repository<Order>
+    @InjectRepository(Order) private readonly repository: Repository<Order>,
+    @InjectRepository(Product) private productRepository: Repository<Product>
   ) {}
 
   async create(dto: OrderDto): Promise<Order> {
     try {
-      const products = await Promise.all(dto.products.map(async (p) => await this.productService.findOne(Number(p))));
-      dto.products = products;
+      if (dto.products) {
+        const products = await Promise.all(
+          dto.products.map(async (p) => await this.productRepository.findOneBy({ id: Number(p) }))
+        );
+        dto.products = products;
+      }
       return await this.repository.save(dto);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
