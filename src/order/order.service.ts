@@ -5,7 +5,7 @@ import { OrderDto } from "./dto/order.dto";
 import { Order } from "./entities/order.entity";
 import { Product } from "../product/entities/product.entity";
 
-const relations = { products: true, referenceOrder: { products: true } };
+const relations = { products: { organization: true }, order: { products: { organization: true } } };
 
 @Injectable()
 export class OrderService {

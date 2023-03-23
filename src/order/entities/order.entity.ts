@@ -33,7 +33,7 @@ export class Order {
 
   @OneToOne(() => Order)
   @JoinColumn()
-  referenceOrder: Order;
+  order: Order;
 
   @ManyToMany(() => Product)
   @JoinTable()

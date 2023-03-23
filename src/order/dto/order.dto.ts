@@ -17,7 +17,7 @@ export class OrderDto {
 
   @ApiProperty({ example: "1" })
   @JoiSchema(Joi.number().integer().optional())
-  referenceOrder?: OrderDto;
+  order?: OrderDto;
 
   @ApiProperty({ example: "[1, 2, 3]" })
   @JoiSchema(Joi.array().items(Joi.number()).unique().optional())
